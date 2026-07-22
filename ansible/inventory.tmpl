@@ -1,16 +1,15 @@
 [all:vars]
 ansible_user=root
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
-# 真实环境绝对禁用密码，此处演示保留，建议用 private_key 替换
+# 生产环境请改用私钥认证，此处仅为演示
 ansible_password=devops123  
 
 [local-docker]
-# 本地 Docker 模拟节点（固定不变）
 node-1 ansible_host=127.0.0.1 ansible_port=2222
 node-2 ansible_host=127.0.0.1 ansible_port=2223
 
 [cloud-real]
-# 👇 关键！这个 IP 由 Terraform 自动填充，不再需要手动修改
+# 👇 这个 IP 由 Terraform 动态替换
 node-3 ansible_host=${cloud_real_ip} ansible_password=Qyr1057469.@
 
 [production:children]
