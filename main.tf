@@ -1,11 +1,15 @@
-provider "alicloud" { region = "cn-shanghai" }
-resource "alicloud_instance" "demo" {
-  # 先用 import 导入现有实例
+# main.tf
+terraform {
+  required_version = ">= 1.0"
+  required_providers {
+    alicloud = {
+      source  = "aliyun/alicloud"
+      version = "~> 1.0"
+    }
+  }
 }
-resource "alicloud_security_group_rule" "allow_grafana" {
-  type        = "ingress"
-  ip_protocol = "tcp"
-  port_range  = "3000/3000"
-  security_group_id = alicloud_security_group.demo.id
-  cidr_ip     = "0.0.0.0/0"
+
+provider "alicloud" {
+  region = "cn-shanghai"   # 按你的实际地域修改
+  # AccessKey 不要硬编码，用环境变量：ALICLOUD_ACCESS_KEY / ALICLOUD_SECRET_KEY
 }
